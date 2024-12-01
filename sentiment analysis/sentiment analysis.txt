@@ -1,0 +1,8 @@
+sentiment-analysis/
+│
+├── app.py               # Back-end server
+├── templates/
+│   └── index.html       # Front-end HTML
+├── static/
+│   ├── style.css        # CSS for styling
+│   └── script.js        # JavaScript for interactivity

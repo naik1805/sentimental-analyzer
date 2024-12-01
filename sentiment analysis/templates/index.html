@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analysis Tool</h1>
+    <textarea id="inputText" rows="5" cols="50" placeholder="Type your text here..."></textarea>
+    <br>
+    <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+    <div id="result"></div>
+
+    <script>
+        async function analyzeSentiment() {
+            const text = document.getElementById("inputText").value;
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text }),
+            });
+            const result = await response.json();
+            if (response.ok) {
+                document.getElementById("result").innerHTML = `
+                    <p><strong>Sentiment:</strong> ${result.sentiment}</p>
+                    <p><strong>Polarity:</strong> ${result.polarity}</p>
+                    <p><strong>Subjectivity:</strong> ${result.subjectivity}</p>
+                `;
+            } else {
+                document.getElementById("result").innerHTML = `<p>Error: ${result.error}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
+
